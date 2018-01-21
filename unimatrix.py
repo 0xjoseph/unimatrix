@@ -1,35 +1,36 @@
 #!/usr/bin/env python3
-#
-# unimatrix.py
-# <https://github.com/will8211/unimatrix>
-#
-# Python script to simulate the display from "The Matrix" in terminal. Uses
-# half-width katakana unicode characters by default, but can use custom
-# character sets. Accepts keyboard controls while running.
-#
-# Based on CMatrix by Chris Allegretta and Abishek V. Ashok. The following
-# option should produce virtually the same output as CMatrix:
-# $ unimatrix -n -s 96 -l o
-#
-# Unimatrix is free software: you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation, either version 3 of the License, or (at your option) any later
-# version.
-#
-# Unimatrix is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License at
-# <http://www.gnu.org/licenses/> for more details.
-#
-# Created by William Mannard
-# 2018/01/19
+# -*- coding: utf-8 -*-
+'''unimatrix.py <https://github.com/will8211/unimatrix>
+
+Python script to simulate the display from "The Matrix" in terminal. Uses
+half-width katakana unicode characters by default, but can use custom
+character sets. Accepts keyboard controls while running.
+
+Based on CMatrix by Chris Allegretta and Abishek V. Ashok. The following
+option should produce virtually the same output as CMatrix:
+$ unimatrix -n -s 96 -l o
+
+Unimatrix is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+Unimatrix is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License at
+<http://www.gnu.org/licenses/> for more details.
+
+Created by William Mannard
+2018/01/19
+
+'''
 
 import curses
 import argparse
 import time
 from random import randint, choice
 
-help_msg = '''
+HELP_MSG = '''
 USAGE
   unimatrix [-b] [-c COLOR] [-h] [-l CHARACTER_LIST] [-n] [-o] [-s SPEED]
             [-u CUSTOM_CHARACTERS]
@@ -171,10 +172,10 @@ parser.add_argument('-w', '--single-wave',
 args = parser.parse_args()
 
 if args.help:
-    print(help_msg)
+    print(HELP_MSG)
     exit()
 
-char_set = {
+CHAR_SET = {
 
     'a': 'qwertyuiopasdfghjklzxcvbnm',
     'A': 'QWERTYUIOPASDFGHJKLZXCVBNM',
@@ -195,7 +196,7 @@ char_set = {
     'S': '`-=~!@#$%^&*()_+[]{}|\;\':",./<>?"',
     'u': args.custom_characters}
 
-colors_str = {
+COLORS_STR = {
     'green': curses.COLOR_GREEN,
     'red': curses.COLOR_RED,
     'blue': curses.COLOR_BLUE,
@@ -203,9 +204,10 @@ colors_str = {
     'yellow': curses.COLOR_YELLOW,
     'cyan': curses.COLOR_CYAN,
     'magenta': curses.COLOR_MAGENTA,
-    'black': curses.COLOR_BLACK}
+    'black': curses.COLOR_BLACK
+}
 
-start_color = colors_str[args.color]
+start_color = COLORS_STR[args.color]
 speed = args.speed
 start_delay = (100-speed)*10
 
@@ -219,7 +221,7 @@ if args.character_list:
     chars = ''
     for letter in args.character_list:
         try:
-            chars += char_set[letter]
+            chars += CHAR_SET[letter]
         except KeyError:
             print("Letter '%s' does not represent a valid character list."
                   % letter)
@@ -231,7 +233,7 @@ elif args.custom_characters:
 
 # Neither "-l" nor "-u" has been set, use default characters
 else:
-    chars = char_set['m']
+    chars = CHAR_SET['m']
 
 if args.no_bold:
     args.all_bold = False
